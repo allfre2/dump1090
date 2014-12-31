@@ -39,12 +39,17 @@
     </script>
     <script type="text/javascript">
     Map=null;
-    CenterLat=45.0;
-    CenterLon=9.0;
+    CenterLat = 0;
+    CenterLon = 0;
+     if (navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(function(position){
+       CenterLat = position.coords.latitude;
+       CenterLon = position.coords.longitude;
+      },function(fail){},{timeout:0, maximumAge:10});
+     }
     Planes={};
     NumPlanes = 0;
     Selected=null
-
     function getIconForPlane(plane) {
         var r = 255, g = 255, b = 0;
         var maxalt = 40000; /* Max altitude in the average case */
@@ -74,7 +79,7 @@
         Planes[Selected].marker.setIcon(getIconForPlane(Planes[Selected]));
         refreshSelectedInfo();
     }
-    
+
     function refreshGeneralInfo() {
         var i = document.getElementById('geninfo');
 
@@ -152,8 +157,8 @@
 
     function initialize() {
         var mapOptions = {
-            center: new google.maps.LatLng(CenterLat, CenterLon),
-            zoom: 5,
+            center: new google.maps.LatLng(CenterLat,CenterLon),
+            zoom: 3,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         Map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
