@@ -45,7 +45,7 @@
       navigator.geolocation.getCurrentPosition(function(position){
        CenterLat = position.coords.latitude;
        CenterLon = position.coords.longitude;
-      },function(fail){},{timeout:0, maximumAge:10});
+      },function(fail){},{timeout:0, maximumAge:100000});
      }
     Planes={};
     NumPlanes = 0;
